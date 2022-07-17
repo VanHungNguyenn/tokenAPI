@@ -12,7 +12,21 @@ app.use(express.urlencoded())
 app.use(cors())
 app.use(cookieParser())
 
+// public
+app.use(express.static('public'))
+// view engine
+app.set('view engine', 'ejs')
+
+// Connect to mongoose
+const URI = process.env.MONGODB_URL
+
+mongoose.connect(URI, (err) => {
+	if (err) throw err
+	console.log('Connected to mongodb')
+})
+
 // Routes
+app.use('/', require('./routes/indexRouter'))
 app.use('/token', require('./routes/tokenRouter'))
 
 app.use((req, res, next) => {
@@ -23,14 +37,6 @@ app.use((err, req, res, next) => {
 	res.json({
 		message: err.message,
 	})
-})
-
-// Connect to mongoose
-const URI = process.env.MONGODB_URL
-
-mongoose.connect(URI, (err) => {
-	if (err) throw err
-	console.log('Connected to mongodb')
 })
 
 const PORT = process.env.PORT || 5015

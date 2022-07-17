@@ -16,6 +16,77 @@ const tokenCtrl = {
 			return res.status(500).json({ message: error.message })
 		}
 	},
+	infor: async (req, res) => {
+		try {
+			const token = await Token.findOneAndUpdate(
+				{ live: true },
+				{ live: false }
+			)
+
+			if (!token) {
+				return res.status(400).json({ message: 'No token' })
+			}
+
+			res.status(200).json({ message: 'Token infor', token })
+		} catch (error) {
+			return res.status(500).json({ message: error.message })
+		}
+	},
+	updateToken: async (req, res) => {
+		try {
+			const { token, live } = req.body
+
+			if (!token || !live) {
+				return res.status(400).json({ message: 'No token' })
+			}
+
+			const newToken = await Token.findOneAndUpdate({ token }, { live })
+
+			if (!newToken) {
+				return res.status(400).json({ message: 'No token' })
+			}
+
+			res.status(200).json({ message: 'Token updated' })
+		} catch (error) {
+			return res.status(500).json({ message: error.message })
+		}
+	},
+	deleteToken: async (req, res) => {
+		try {
+			const { token } = req.body
+
+			if (!token) {
+				return res.status(400).json({ message: 'No token' })
+			}
+
+			const newToken = await Token.findOneAndDelete({ token })
+
+			if (!newToken) {
+				return res.status(400).json({ message: 'No token' })
+			}
+
+			res.status(200).json({ message: 'Token deleted' })
+		} catch (error) {
+			return res.status(500).json({ message: error.message })
+		}
+	},
+	getAllTokens: async (req, res) => {
+		try {
+			const { page = 1, limit = 10 } = req.query
+
+			const tokens = await Token.find({})
+				.skip(page * limit - limit)
+				.limit(limit)
+
+			if (!tokens) {
+				return res.status(400).json({ message: 'No tokens' })
+			}
+
+			res.status(200).json({ message: 'Tokens', tokens })
+		} catch (error) {
+			return res.status(500).json({ message: error.message })
+		}
+	},
 }
 
 module.exports = tokenCtrl
