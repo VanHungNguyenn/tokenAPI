@@ -11,17 +11,24 @@ const tokenCtrl = {
 
 			const newToken = new Token({ uid, token })
 			await newToken.save()
-			res.status(200).json({ message: 'Token created' })
+			res.status(200).json({ message: 'Token created', token: newToken })
 		} catch (error) {
 			return res.status(500).json({ message: error.message })
 		}
 	},
 	infor: async (req, res) => {
 		try {
+			// get order token with updatedAt desc
 			const token = await Token.findOneAndUpdate(
-				{ live: true },
-				{ live: false }
-			)
+				{
+					live: true,
+				},
+				{
+					$set: { live: false },
+				}
+			).sort({
+				updatedAt: 1,
+			})
 
 			if (!token) {
 				return res.status(400).json({ message: 'No token' })
@@ -83,6 +90,28 @@ const tokenCtrl = {
 			}
 
 			res.status(200).json({ message: 'Tokens', tokens })
+		} catch (error) {
+			return res.status(500).json({ message: error.message })
+		}
+	},
+	getTokenId: async (req, res) => {
+		try {
+			const { token } = req.params
+
+			if (!token) {
+				return res.status(400).json({ message: 'No token' })
+			}
+
+			const newToken = await Token.findOne({ token })
+
+			if (!newToken) {
+				return res.status(400).json({ message: 'No token' })
+			}
+
+			res.status(200).json({
+				message: 'Get token success',
+				token: newToken,
+			})
 		} catch (error) {
 			return res.status(500).json({ message: error.message })
 		}

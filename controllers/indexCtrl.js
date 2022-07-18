@@ -15,7 +15,11 @@ const indexCtrl = {
 
 			const total = await Token.countDocuments()
 
-			res.render('index', { tokens, total, page, limit })
+			res.render('main/index', {
+				tokens,
+				page,
+				pages: Math.ceil(total / limit),
+			})
 		} catch (error) {
 			return res.status(500).json({ message: error.message })
 		}

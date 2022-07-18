@@ -1,0 +1,25 @@
+POST http://localhost:5015/token/create
+Content-Type: application/json
+
+{
+    "uid": "123456",
+    "token": "token12"
+}
+
+###############
+GET http://localhost:5015/token/all
+
+###############
+GET http://localhost:5015/token/infor
+
+###############
+PUT http://localhost:5015/token/update
+Content-Type: application/json
+
+{
+    "live": true,
+    "token": "token7"
+}
+
+###############
+GET http://localhost:5015/token/token5

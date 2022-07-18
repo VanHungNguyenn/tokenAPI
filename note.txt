@@ -1,4 +1,4 @@
-1/ thông tin gồm UID , Token , Status ( Bao gồm : Die ,Live) (Ban đầu live)
+1/ thông tin gồm UID , Token , Status ( Bao gồm : Die ,Live) (Ban đầu live)  okie
 2/ Khi gửi lại token lên server có chứa UID thì update lại status = Live 
 3/ Khi get token ra thì server check con nào LIVE thì xuất ra và update lại tình trạng DIE   
 4/ Cpanel hiển thị thông tin thứ 1
