@@ -18,7 +18,6 @@ const tokenCtrl = {
 	},
 	infor: async (req, res) => {
 		try {
-			// get order token with updatedAt desc
 			const token = await Token.findOneAndUpdate(
 				{
 					live: true,
@@ -26,12 +25,10 @@ const tokenCtrl = {
 				{
 					$set: { live: false },
 				}
-			).sort({
-				updatedAt: 1,
-			})
+			)
 
 			if (!token) {
-				return res.status(400).json({ message: 'No token' })
+				return res.status(400).json({ message: 'No tokennn' })
 			}
 
 			res.status(200).json({ message: 'Token infor', token })

@@ -20,7 +20,14 @@
 				<tr>
 					<td><%= tokens[i].uid %></td>
 					<td><%= tokens[i].token %></td>
-					<td><%= tokens[i].live %></td>
+					<td>
+						<!-- if tokens[i].live == true, text green, else text red -->
+						<% if(tokens[i].live == true) { %>
+						<span class="text-success">Yes</span>
+						<% } else { %>
+						<span class="text-danger">No</span>
+						<% } %>
+					</td>
 					<td>
 						<%= tokens[i].createdAt.toLocaleDateString( 'en-US', {
 						year: 'numeric', month: '2-digit', day: '2-digit', hour:
